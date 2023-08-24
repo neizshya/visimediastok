@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import Login from "./Pages/Login";
+import Home from "./Pages/Dashboard";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import ProfileScreen from "./Pages/Profile";
+import MainNavigator from "./src/Components/MainNavigator/MainNavigator";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  SimpleLineIcons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
+
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { useContext, useEffect, useState } from "react";
+import { UserContext, useUserState } from "./context/UserContext";
+import StackNavigator from "./src/Components/MainNavigator/MainNavigator";
 
 export default function App() {
+  const userState = useUserState();
+  const { isDataLoaded } = useUserState();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {/* <Provider> */}
+      <UserContext.Provider value={userState}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <StackNavigator isDataLoaded={isDataLoaded} />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </UserContext.Provider>
+      {/* </Provider> */}
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
