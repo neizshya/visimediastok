@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -21,10 +21,12 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { UserContext } from "../context/UserContext";
 
 const screenWidth = Dimensions.get("window").width;
 
 const ItemDetail = ({ route }) => {
+  const { loggedInUserData } = useContext(UserContext);
   const { itemId } = route.params;
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
@@ -237,7 +239,9 @@ const ItemDetail = ({ route }) => {
                 style={styles.data}
                 disabled={isEdit}
               />
-              {isEdit ? (
+              {loggedInUserData.userData.isAdmin === false ? (
+                <></>
+              ) : isEdit ? (
                 <>
                   <TouchableOpacity
                     style={styles.editButton}
@@ -271,41 +275,49 @@ const ItemDetail = ({ route }) => {
           <View style={styles.jumlahContainer}>
             <Text style={styles.label}>Jumlah:</Text>
             <Text style={styles.qtyText}>{selectedItem?.qty}</Text>
-            <View style={styles.jumlahButton}>
-              <TouchableOpacity
-                style={styles.kurangiTambahButton}
-                onPress={handleKurangiPress}>
-                <Text style={styles.kurangiTambahButtonText}>
-                  Kurangi Barang
-                </Text>
-              </TouchableOpacity>
-              <KurangiBarangModal
-                visible={kurangiModalVisible}
-                onClose={() => setKurangiModalVisible(false)}
-                item={selectedItem}
-                onSave={handleKurangiSave}
-              />
-              <TouchableOpacity
-                style={styles.kurangiTambahButton}
-                onPress={handleTambahPress}>
-                <Text style={styles.kurangiTambahButtonText}>
-                  Tambah Barang
-                </Text>
-              </TouchableOpacity>
-              <TambahBarangModal
-                visible={tambahModalVisible}
-                onClose={() => setTambahModalVisible(false)}
-                item={selectedItem}
-                onSave={handleTambahSave}
-              />
-            </View>
+            {loggedInUserData.userData.isAdmin === false ? (
+              <></>
+            ) : (
+              <View style={styles.jumlahButton}>
+                <TouchableOpacity
+                  style={styles.kurangiTambahButton}
+                  onPress={handleKurangiPress}>
+                  <Text style={styles.kurangiTambahButtonText}>
+                    Kurangi Barang
+                  </Text>
+                </TouchableOpacity>
+                <KurangiBarangModal
+                  visible={kurangiModalVisible}
+                  onClose={() => setKurangiModalVisible(false)}
+                  item={selectedItem}
+                  onSave={handleKurangiSave}
+                />
+                <TouchableOpacity
+                  style={styles.kurangiTambahButton}
+                  onPress={handleTambahPress}>
+                  <Text style={styles.kurangiTambahButtonText}>
+                    Tambah Barang
+                  </Text>
+                </TouchableOpacity>
+                <TambahBarangModal
+                  visible={tambahModalVisible}
+                  onClose={() => setTambahModalVisible(false)}
+                  item={selectedItem}
+                  onSave={handleTambahSave}
+                />
+              </View>
+            )}
           </View>
-          <Button
-            style={styles.deleteButton}
-            onPress={handleDelete}
-            loading={isLoadingDelete}>
-            <Text style={styles.deleteButtonText}>Hapus</Text>
-          </Button>
+          {loggedInUserData.userData.isAdmin === false ? (
+            <></>
+          ) : (
+            <Button
+              style={styles.deleteButton}
+              onPress={handleDelete}
+              loading={isLoadingDelete}>
+              <Text style={styles.deleteButtonText}>Hapus</Text>
+            </Button>
+          )}
         </View>
       )}
     </>

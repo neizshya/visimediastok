@@ -90,7 +90,7 @@ export default function Login({ navigation }) {
         />
       </View>
 
-      <View style={styles.bottomContainer}>
+      {/* <View style={styles.bottomContainer}>
         <Text style={styles.infoText}>
           Gunakan hanya APABILA sebelumnya telah login namun tidak bisa masuk ke
           aplikasi
@@ -100,7 +100,7 @@ export default function Login({ navigation }) {
           style={styles.logoutButton}>
           <Text style={styles.logoutButtonText}>Force Logout</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </>
   );
 }

@@ -192,13 +192,13 @@ export default function ReportScreen({ navigation }) {
 
       // Customize column widths
       const columnWidths = [
-        { wch: 5 }, // Column A width
-        { wch: 20 }, // Column B width
-        { wch: 10 }, // Column C width
-        { wch: 15 }, // Column D width
-        { wch: 15 }, // Column E width
-        { wch: 20 }, // Column F width
-        { wch: 15 }, // Column G width
+        { wch: 5 },
+        { wch: 20 },
+        { wch: 10 },
+        { wch: 15 },
+        { wch: 15 },
+        { wch: 20 },
+        { wch: 15 },
       ];
 
       ws["!cols"] = columnWidths;
@@ -226,14 +226,16 @@ export default function ReportScreen({ navigation }) {
       if (Platform.OS === "ios" || Platform.OS === "android") {
         const fileUri = `file://${filePath}`;
         await Sharing.shareAsync(fileUri);
+        Alert.alert("Data Terunduh");
+        setDownloadReport(!downloadReport);
       } else {
         Alert.alert(
-          "Unsupported platform",
-          "File sharing is not supported on this platform."
+          "platform tidak didukung",
+          "File sharing tidak dapat digunakan di platform ini."
         );
       }
     } catch (error) {
-      console.error("Error exporting to Excel:", error);
+      Alert.alert(`Error exporting to Excel: ${error}`);
     }
   };
 

@@ -175,7 +175,7 @@ export default function Dashboard({ navigation }) {
 
   return (
     <>
-      <View style={{ paddingHorizontal: 20, marginBottom: screenHeight * 0.1 }}>
+      <View style={{ paddingHorizontal: 20, height: screenHeight * 0.92 }}>
         <View>
           <StatusBar backgroundColor={"#5689c0"} barStyle={"dark-content"} />
           {/* greeting section */}

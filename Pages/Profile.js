@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StatusBar, Image, StyleSheet } from "react-native";
+import { View, Text, StatusBar, Image } from "react-native";
 import { Button } from "react-native-paper";
 import LoginButtons from "../src/Components/LoginButton";
 import { signOut } from "firebase/auth";
@@ -37,30 +37,80 @@ export default function ProfileScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#5689c0" />
-      <View style={styles.profileInfo}>
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle={"dark-content"} backgroundColor={"#5689c0"} />
+      <View
+        style={{
+          flex: 0.8,
+          backgroundColor: "#fafafa",
+          alignItems: "center",
+          paddingTop: 32,
+        }}>
         <Image
           source={{ uri: loggedInUserData.userData.image }}
-          style={styles.profileImage}
+          style={{
+            width: 150,
+            height: 150,
+            borderRadius: 100,
+          }}
         />
-        <Text style={styles.profileName}>{loggedInUserData.userData.name}</Text>
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            paddingTop: 12,
+          }}>
+          {loggedInUserData.userData.name}
+        </Text>
       </View>
-      <View style={styles.detailsContainer}>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Posisi</Text>
-          <Text style={styles.detailValue}>
-            {loggedInUserData.userData.role}
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#fafafa",
+          flexDirection: "row",
+          paddingHorizontal: 20,
+          paddingTop: 4,
+        }}>
+        <View
+          style={{
+            flex: 0.9,
+            backgroundColor: "#fafafa",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}>
+          <Text style={{ fontSize: 20, paddingVertical: 8 }}>Posisi</Text>
+          <Text style={{ fontSize: 20, paddingVertical: 8 }}>
+            Jenis Kelamin
           </Text>
         </View>
-        <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Jenis Kelamin</Text>
-          <Text style={styles.detailValue}>
+        <View
+          style={{
+            flex: 0.1,
+            backgroundColor: "#fafafa",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}>
+          <Text style={{ fontSize: 20, paddingVertical: 8 }}>:</Text>
+          <Text style={{ fontSize: 20, paddingVertical: 8 }}>:</Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "#fafafa",
+
+            flexDirection: "column",
+            justifyContent: "flex-start",
+          }}>
+          <Text style={{ fontSize: 20, paddingVertical: 8 }}>
+            {loggedInUserData.userData.role}
+          </Text>
+          <Text style={{ fontSize: 20, paddingVertical: 8 }}>
             {loggedInUserData.userData.gender}
           </Text>
         </View>
       </View>
-      <View style={styles.logoutContainer}>
+      <View
+        style={{ flex: 1, backgroundColor: "#fafafa", paddingHorizontal: 20 }}>
         <LoginButtons
           text="Keluar"
           onPressHandle={handleLogout}
@@ -70,52 +120,3 @@ export default function ProfileScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fafafa",
-  },
-  profileInfo: {
-    flex: 0.8,
-    backgroundColor: "#fafafa",
-    alignItems: "center",
-    paddingTop: 32,
-  },
-  profileImage: {
-    width: 150,
-    height: 150,
-    borderRadius: 100,
-  },
-  profileName: {
-    fontSize: 24,
-    fontWeight: "bold",
-    paddingTop: 12,
-  },
-  detailsContainer: {
-    flex: 1,
-    backgroundColor: "#fafafa",
-    flexDirection: "row",
-    paddingHorizontal: 20,
-    paddingTop: 4,
-  },
-  detailRow: {
-    flex: 1,
-    backgroundColor: "#fafafa",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-  },
-  detailLabel: {
-    fontSize: 20,
-    paddingVertical: 8,
-  },
-  detailValue: {
-    fontSize: 20,
-    paddingVertical: 8,
-  },
-  logoutContainer: {
-    flex: 1,
-    backgroundColor: "#fafafa",
-    paddingHorizontal: 20,
-  },
-});
